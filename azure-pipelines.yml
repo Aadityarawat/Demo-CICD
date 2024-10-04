@@ -36,7 +36,6 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy deliverables'
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/myAndroidApp/bin/$(buildConfiguration)'
     Contents: '*.aab'
     TargetFolder: 'drop'
 
