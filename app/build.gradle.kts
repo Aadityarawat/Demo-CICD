@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.democicd"
+    namespace = "com.cicd.democicd"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.democicd"
+        applicationId = "com.cicd.democicd"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
