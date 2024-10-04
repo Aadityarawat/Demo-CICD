@@ -25,6 +25,13 @@ steps:
     tasks: 'clean build test assembleRelease assembleDebug assembleAndroidTest'
     sonarQubeRunAnalysis: false
     
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/*.apk'
+    apksignerKeystoreFile: 'keystore1'
+    apksignerKeystorePassword: '12345678'
+    apksignerKeystoreAlias: 'key0'
+    apksignerKeyPassword: '12345678'
 - task: CopyFiles@2
   inputs:
     contents: '**/*.apk'
