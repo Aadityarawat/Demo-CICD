@@ -17,7 +17,7 @@ steps:
     jdkVersionOption: '17'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'clean build test assembleRelease'
+    tasks: 'clean build test assembleRelease assembleDebug assembleAndroidTest bundleRelease'
     sonarQubeRunAnalysis: false
     
 - task: AndroidSigning@3
@@ -32,5 +32,12 @@ steps:
   inputs:
     contents: '**/*.apk'
     targetFolder: '$(build.artifactStagingDirectory)'
+    
+- task: CopyFiles@2
+  displayName: 'Copy deliverables'
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/myAndroidApp/bin/$(buildConfiguration)'
+    Contents: '*.aab'
+    TargetFolder: 'drop'
 
 - task: PublishBuildArtifacts@1
