@@ -13,7 +13,7 @@ pool:
   vmImage: 'macos-latest'
 
 steps:
-- task: Gradle@3
+- task: Gradle@2
   inputs:
     workingDirectory: '$(Build.Repository.LocalPath)'
     gradleWrapperFile: '$(Build.Repository.LocalPath)/gradlew'
@@ -22,7 +22,7 @@ steps:
     jdkVersionOption: '17'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'clean build test assembleRelease assembleDebug assembleAndroidTest bundleRelease'
+    tasks: 'clean build test assembleRelease assembleDebug assembleAndroidTest'
     sonarQubeRunAnalysis: false
     
 
