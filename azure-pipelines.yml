@@ -2,7 +2,9 @@ trigger:
 - main
 
 pr:
-  - main
+  branches:
+    include:
+      - main
 
 pool:
   vmImage: 'macos-latest'
@@ -27,26 +29,28 @@ steps:
     apksignerKeystorePassword: '12345678'
     apksignerKeystoreAlias: 'key0'
     apksignerKeyPassword: '12345678'
-    
+
 - task: CopyFiles@2
   inputs:
     contents: '**/*.apk'
     targetFolder: '$(build.artifactStagingDirectory)'
 
-- script: |
-    echo "Listing files in the AAB output directory:"
-    ls -R $(Build.SourcesDirectory)/myAndroidApp/app/build/outputs/bundle/
-  displayName: 'List AAB output directory'
-
 - task: CopyFiles@2
   displayName: 'Copy AAB files'
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/myAndroidApp/app/build/outputs/bundle/'
-    Contents: '*.aab'
-    TargetFolder: 'drop'
+    contents: '**/*.aab'
+    targetFolder: '$(build.artifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: 'drop'
+    PathtoPublish: '$(build.artifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+- task: Bash@1
+  displayName: 'List AAB output directory'
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Listing files in the AAB output directory:"
+      ls $(Build.SourcesDirectory)/app/build/outputs/bundle/release/
