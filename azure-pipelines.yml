@@ -32,11 +32,21 @@ steps:
   inputs:
     contents: '**/*.apk'
     targetFolder: '$(build.artifactStagingDirectory)'
-    
+
+- script: |
+    echo "Listing files in the AAB output directory:"
+    ls -R $(Build.SourcesDirectory)/myAndroidApp/app/build/outputs/bundle/
+  displayName: 'List AAB output directory'
+
 - task: CopyFiles@2
-  displayName: 'Copy deliverables'
+  displayName: 'Copy AAB files'
   inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/myAndroidApp/app/build/outputs/bundle/'
     Contents: '*.aab'
     TargetFolder: 'drop'
 
 - task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'drop'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
