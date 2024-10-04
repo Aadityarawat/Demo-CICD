@@ -17,7 +17,7 @@ steps:
     jdkVersionOption: '17'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'clean build test assembleRelease assembleDebug assembleAndroidTest bundleRelease'
+    tasks: 'clean build test assembleRelease'
     sonarQubeRunAnalysis: false
     
 - task: AndroidSigning@3
