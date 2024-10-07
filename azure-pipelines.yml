@@ -47,10 +47,4 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-- task: Bash@1
-  displayName: 'List AAB output directory'
-  inputs:
-    targetType: 'inline'
-    script: |
-      echo "Listing files in the AAB output directory:"
-      ls $(Build.SourcesDirectory)/app/build/outputs/bundle/release/
+
