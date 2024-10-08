@@ -1,0 +1,37 @@
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: 'AndroidApp.jks'
+
+- task: Gradle@2
+  inputs:
+    gradleWrapperFile: 'gradlew'
+    tasks: ':app:bundleRelease'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    sonarQubeRunAnalysis: false
+    spotBugsAnalysis: false
+
+
+- task: CmdLine@2
+  displayName: 'Signing and aligning AAB file(s) app\build\outputs\bundle\release\app-release.aab'
+  inputs:
+    script: 'jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore $(KeyStoreFile.secureFilePath) -storepass $(StorePassword) -keypass $(KeyPassword) $(system.defaultworkingdirectory)/app/build/outputs/bundle/release/app-release.aab $(KeyStoreAlias)'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)/app/build/outputs/bundle/release/'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
