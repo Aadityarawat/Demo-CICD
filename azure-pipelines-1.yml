@@ -11,12 +11,15 @@ steps:
 
 - task: Gradle@2
   inputs:
-    gradleWrapperFile: 'gradlew'
-    tasks: ':app:bundleRelease'
-    publishJUnitResults: false
+    workingDirectory: '$(Build.Repository.LocalPath)'
+    gradleWrapperFile: '$(Build.Repository.LocalPath)/gradlew'
+    gradleOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '17'
+    publishJUnitResults: false
+    testResultsFiles: '**/TEST-*.xml'
+    tasks: 'clean build test assembleRelease assembleDebug assembleAndroidTest bundleRelease'
     sonarQubeRunAnalysis: false
-    spotBugsAnalysis: false
 
 # Signing the AAB file
 - task: CmdLine@2
