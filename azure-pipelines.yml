@@ -30,6 +30,17 @@ steps:
     apksignerKeystoreAlias: 'key0'
     apksignerKeyPassword: '12345678'
 
+- task: AndroidSigning@3
+  inputs:
+    apksign: false
+    apks: '**/*.aab'
+    jarsign: true
+    keystoreFile: 'keystore1'
+    keystorePass: '12345678' 
+    keyAlias: 'key0' 
+    keyPass: '12345678' 
+
+
 - task: CopyFiles@2
   inputs:
     contents: '**/*.apk'
