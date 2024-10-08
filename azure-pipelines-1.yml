@@ -21,17 +21,16 @@ steps:
     tasks: 'clean build test assembleRelease assembleDebug assembleAndroidTest bundleRelease'
     sonarQubeRunAnalysis: false
 
-# Signing the AAB file
 - task: CmdLine@2
   displayName: 'Signing and aligning AAB file(s) app/build/outputs/bundle/release/app-release.aab'
   inputs:
     script: |
       jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
-      -keystore $(secureFilePath) \
-      -storepass $(StorePassword) \
-      -keypass $(KeyPassword) \
+      -keystore $(Agent.TempDirectory)/keystore1 \
+      -storepass '12345678' \
+      -keypass '12345678' \
       $(system.defaultworkingdirectory)/app/build/outputs/bundle/release/app-release.aab \
-      $(KeyStoreAlias)
+      'key0'
 
 - task: CopyFiles@2
   inputs:
