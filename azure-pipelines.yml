@@ -35,10 +35,10 @@ steps:
     apksign: false
     apks: '**/*.aab'
     jarsign: true
-    keystoreFile: 'keystore1'
-    keystorePass: '12345678' 
-    keyAlias: 'key0' 
-    keyPass: '12345678' 
+    keystoreFile: '$(keystore1)'
+    keystorePass: '$(12345678)' 
+    keyAlias: '$(key0)' 
+    keyPass: '$(12345678)' 
 
 
 - task: CopyFiles@2
